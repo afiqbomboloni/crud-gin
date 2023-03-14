@@ -53,7 +53,14 @@ func Create(c * gin.Context) {
 		return
 	}
 
+	
+
 	models.DB.Create(&product)
+
+	if product.Id == 0 {
+		c.JSON(http.StatusBadRequest,gin.H{"message": "Value must unique"})
+		return
+	}
 	c.JSON(http.StatusCreated, gin.H{
 		"product": product,
 	})
